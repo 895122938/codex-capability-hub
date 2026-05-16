@@ -1,0 +1,9 @@
+{
+  "browser": "browser-use@openai-bundled",
+  "chrome": "chrome@openai-bundled",
+  "documents": "documents@openai-primary-runtime",
+  "presentations": "presentations@openai-primary-runtime",
+  "spreadsheets": "spreadsheets@openai-primary-runtime",
+  "zotero": "zotero@openai-curated",
+  "scite": "scite@openai-curated"
+}

@@ -1,0 +1,110 @@
+{
+  "version": 1,
+  "capabilities": [
+    {
+      "id": "debug",
+      "type": "bundle",
+      "description": "Root-cause debugging, diagnosis, TDD, and CI failure handling.",
+      "triggers": ["bug", "test failure", "debug", "CI failure", "regression", "排查", "报错", "修复"],
+      "aliases": ["debug", "排查", "bug"],
+      "tags": ["debug", "test", "ci"],
+      "risk_level": "low",
+      "startup_cost_if_hot": "medium",
+      "wake": [
+        {"type": "skill", "name": "systematic-debugging"},
+        {"type": "skill", "name": "diagnose"},
+        {"type": "skill", "name": "tdd"}
+      ],
+      "sleep": [
+        {"type": "skill", "name": "systematic-debugging"},
+        {"type": "skill", "name": "diagnose"},
+        {"type": "skill", "name": "tdd"}
+      ]
+    },
+    {
+      "id": "office",
+      "type": "bundle",
+      "description": "DOCX/PDF/PPTX/XLSX authoring and editing, loaded only for document work.",
+      "triggers": ["PPT", "PPTX", "Word", "DOCX", "Excel", "XLSX", "PDF", "document", "slides", "文档", "表格", "演示文稿"],
+      "aliases": ["ppt", "word", "excel", "pdf", "office"],
+      "tags": ["office", "ppt", "docx", "xlsx", "pdf"],
+      "risk_level": "low",
+      "startup_cost_if_hot": "medium-high",
+      "wake": [
+        {"type": "plugin", "name": "documents"},
+        {"type": "plugin", "name": "presentations"},
+        {"type": "plugin", "name": "spreadsheets"},
+        {"type": "skill", "name": "doc"},
+        {"type": "skill", "name": "pdf"},
+        {"type": "skill", "name": "pptx-generator"}
+      ],
+      "sleep": [
+        {"type": "plugin", "name": "documents"},
+        {"type": "plugin", "name": "presentations"},
+        {"type": "plugin", "name": "spreadsheets"},
+        {"type": "skill", "name": "doc"},
+        {"type": "skill", "name": "pdf"},
+        {"type": "skill", "name": "pptx-generator"}
+      ]
+    },
+    {
+      "id": "browser",
+      "type": "bundle",
+      "description": "Fast browser automation via Playwright MCP for web QA, screenshots, and localhost testing.",
+      "triggers": ["localhost", "screenshot", "browser test", "open page", "网页测试", "截图"],
+      "aliases": ["localhost", "截图", "browser"],
+      "tags": ["browser", "playwright", "localhost"],
+      "risk_level": "medium",
+      "startup_cost_if_hot": "high",
+      "wake": [{"type": "mcp", "name": "playwright-browser"}],
+      "sleep": [{"type": "mcp", "name": "playwright-browser"}]
+    },
+    {
+      "id": "chrome-login",
+      "type": "bundle",
+      "description": "Use local Chrome/login/profile-dependent pages, existing tabs, cookies, or authenticated browser state through Chrome plugin.",
+      "triggers": ["local Chrome", "Chrome login state", "cookies", "existing tab", "本地 Chrome", "Chrome 登录态", "登录态", "登录状态", "已登录网页"],
+      "aliases": ["chrome login", "login-state", "本地 Chrome", "登录态"],
+      "tags": ["chrome", "login", "cookies", "登录态"],
+      "risk_level": "high",
+      "startup_cost_if_hot": "high",
+      "sensitive": true,
+      "wake": [{"type": "plugin", "name": "chrome"}],
+      "sleep": [{"type": "plugin", "name": "chrome"}]
+    },
+    {
+      "id": "research-lit",
+      "type": "bundle",
+      "description": "Literature research and citation workflows.",
+      "triggers": ["paper search", "literature review", "citation", "Zotero", "Google Scholar", "查论文", "文献", "引用"],
+      "aliases": ["论文", "文献", "zotero", "citation"],
+      "tags": ["research", "papers", "citation"],
+      "risk_level": "medium",
+      "startup_cost_if_hot": "high",
+      "wake": [
+        {"type": "plugin", "name": "zotero"},
+        {"type": "plugin", "name": "scite"},
+        {"type": "skill", "name": "literature-search"},
+        {"type": "skill", "name": "bib-search-citation"}
+      ],
+      "sleep": [
+        {"type": "plugin", "name": "zotero"},
+        {"type": "plugin", "name": "scite"},
+        {"type": "skill", "name": "literature-search"},
+        {"type": "skill", "name": "bib-search-citation"}
+      ]
+    },
+    {
+      "id": "filesystem",
+      "type": "mcp",
+      "name": "filesystem-local",
+      "description": "Filesystem MCP scoped by the user's config. Enable only with explicit intent.",
+      "triggers": ["filesystem MCP", "file system MCP", "启用 filesystem", "文件系统 MCP"],
+      "aliases": ["filesystem", "文件系统"],
+      "tags": ["filesystem", "mcp"],
+      "risk_level": "high",
+      "startup_cost_if_hot": "medium",
+      "sensitive": true
+    }
+  ]
+}

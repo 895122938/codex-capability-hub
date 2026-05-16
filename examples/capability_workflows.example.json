@@ -1,0 +1,23 @@
+{
+  "version": 1,
+  "workflows": [
+    {
+      "id": "research-to-paper",
+      "description": "From literature search to paper/report/slides deliverable.",
+      "triggers": ["find papers then write", "research to report", "查论文然后写"],
+      "phases": [
+        {"capability": "research-lit", "role": "collect evidence and citations"},
+        {"capability": "office", "role": "produce document or slides"}
+      ]
+    },
+    {
+      "id": "bugfix-release",
+      "description": "Root-cause debugging through release validation.",
+      "triggers": ["debug then release", "fix CI then deploy"],
+      "phases": [
+        {"capability": "debug", "role": "find root cause"},
+        {"capability": "browser", "role": "validate UI if relevant"}
+      ]
+    }
+  ]
+}

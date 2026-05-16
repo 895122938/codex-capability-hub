@@ -1,0 +1,20 @@
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+
+# Local/private Codex state
+.codex/
+config.toml
+*.bak
+*.local.*
+capabilities.local.json
+capability_workflow_state.json
+
+# Logs/editors
+*.log
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db

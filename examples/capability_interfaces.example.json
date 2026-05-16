@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "artifact_types": {
+    "research_notes": "A structured evidence/citation note set.",
+    "slide_deck": "A PPTX or slide outline.",
+    "debug_report": "A root-cause analysis and fix plan."
+  },
+  "capabilities": {
+    "research-lit": {"inputs": [], "outputs": ["research_notes"], "handoffs": ["office"]},
+    "office": {"inputs": ["research_notes"], "outputs": ["slide_deck"], "handoffs": []},
+    "debug": {"inputs": [], "outputs": ["debug_report"], "handoffs": []}
+  }
+}

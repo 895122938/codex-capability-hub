@@ -1,0 +1,45 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Codex Capability Hub registry",
+  "type": "object",
+  "required": ["capabilities"],
+  "properties": {
+    "version": {"type": ["integer", "string"]},
+    "capabilities": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/capability"}
+    }
+  },
+  "$defs": {
+    "action": {
+      "type": "object",
+      "required": ["type", "name"],
+      "properties": {
+        "type": {"enum": ["skill", "mcp", "plugin", "script", "instruction"]},
+        "name": {"type": "string"},
+        "args": {"type": "array", "items": {"type": "string"}},
+        "description": {"type": "string"}
+      },
+      "additionalProperties": true
+    },
+    "capability": {
+      "type": "object",
+      "required": ["id", "type", "description"],
+      "properties": {
+        "id": {"type": "string", "pattern": "^[a-z0-9][a-z0-9-]{0,63}$"},
+        "type": {"enum": ["bundle", "skill", "mcp", "plugin", "script", "instruction"]},
+        "name": {"type": "string"},
+        "description": {"type": "string"},
+        "triggers": {"type": "array", "items": {"type": "string"}},
+        "aliases": {"type": "array", "items": {"type": "string"}},
+        "tags": {"type": "array", "items": {"type": "string"}},
+        "risk_level": {"enum": ["low", "medium", "high"]},
+        "sensitive": {"type": "boolean"},
+        "startup_cost_if_hot": {"type": "string"},
+        "wake": {"type": "array", "items": {"$ref": "#/$defs/action"}},
+        "sleep": {"type": "array", "items": {"$ref": "#/$defs/action"}}
+      },
+      "additionalProperties": true
+    }
+  }
+}
