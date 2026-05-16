@@ -29,6 +29,37 @@ def set_feature(name: str, on: bool, *, write: bool = True) -> str:
     return text
 
 
+def remove_feature(name: str, *, write: bool = True) -> bool:
+    """Remove an unsupported/obsolete feature key instead of setting it false.
+
+    Some Codex builds treat unknown [features] keys as feature-enable requests and
+    wait for a timeout during UI loading. For those keys, absence is safer than
+    `false`.
+    """
+    import re
+
+    header = "[features]"
+    key_re = re.compile(rf"^\s*{re.escape(name)}\s*=")
+    lines = read_config_text().splitlines()
+    out: list[str] = []
+    in_section = False
+    removed = False
+    for line in lines:
+        stripped = line.strip()
+        is_header = stripped.startswith("[") and stripped.endswith("]")
+        if is_header:
+            in_section = stripped == header
+            out.append(line)
+            continue
+        if in_section and key_re.match(line):
+            removed = True
+            continue
+        out.append(line)
+    if write and removed:
+        write_config_text("\n".join(out))
+    return removed
+
+
 def plugin_section(plugin: str) -> str:
     escaped = plugin.replace('"', '\\"')
     return f'plugins."{escaped}"'
@@ -74,15 +105,16 @@ def disable_optionals(*, write_backup: bool = True) -> None:
 def lean_startup() -> None:
     backup_config("plugin-lean-startup")
     disable_optionals(write_backup=False)
-    set_feature("workspace_dependencies", False)
-    print("lean-startup applied: optional plugins are cold; [features].plugins=false; workspace_dependencies=false")
+    removed = remove_feature("workspace_dependencies")
+    suffix = "; removed unsupported workspace_dependencies key" if removed else ""
+    print("lean-startup applied: optional plugins are cold; [features].plugins=false" + suffix)
 
 
 def status() -> None:
     config = load_config()
     features = config.get("features", {}) or {}
     print("features.plugins=", features.get("plugins", "default"))
-    print("features.workspace_dependencies=", features.get("workspace_dependencies", "default"))
+    print("features.workspace_dependencies=", features.get("workspace_dependencies", "absent"))
     plugins = config.get("plugins", {}) or {}
     seen: set[str] = set()
     for alias in optional_plugins():

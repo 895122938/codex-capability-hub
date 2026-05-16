@@ -18,6 +18,7 @@ Recommended default on Windows:
 
 - Keep broad skill packs cold.
 - Keep `[features].plugins = false` until a plugin-backed capability is needed.
+- Do not keep unsupported feature keys in `[features]`. In particular, if your Codex desktop build logs `unsupported feature enablement workspace_dependencies`, delete the `workspace_dependencies` line instead of setting it to `false`.
 - Keep only tiny system skills hot.
 - Prefer direct installed MCP commands over `npx`/`uvx` wrappers when possible.
 - Wake capabilities only when a request clearly needs them.

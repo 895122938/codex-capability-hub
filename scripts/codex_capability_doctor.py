@@ -84,15 +84,15 @@ def recommendations_for(data: dict[str, Any], findings: list[dict[str, str]]) ->
             )
         )
 
-    if "workspace_dependencies_hot" in codes:
+    if "unsupported_workspace_dependencies_key" in codes:
         recs.append(
             _recommendation(
-                "disable-workspace-dependencies",
-                "medium",
-                "Cool workspace dependency loading unless needed",
-                "Workspace dependency loading is useful for document/PDF/spreadsheet work, but should not stay hot for ordinary chat/coding.",
+                "remove-unsupported-workspace-dependencies",
+                "high",
+                "Remove unsupported workspace_dependencies feature key",
+                "Some Codex desktop builds wait for a UI-loading timeout when an unsupported [features].workspace_dependencies key is present, even if it is set to false.",
                 [
-                    "Edit ~/.codex/config.toml and set [features].workspace_dependencies = false when not needed.",
+                    "Edit ~/.codex/config.toml and delete the workspace_dependencies line from [features].",
                     _ps("codex-capability-health.ps1"),
                 ],
             )

@@ -18,6 +18,7 @@ Windows 推荐默认状态：
 
 - 大型 skill pack 默认冷藏。
 - `[features].plugins = false`，直到任务确实需要插件能力。
+- 不要在 `[features]` 里保留当前 Codex Desktop 不支持的 feature key。特别是日志里如果出现 `unsupported feature enablement workspace_dependencies`，应该删除 `workspace_dependencies` 这一行，而不是把它设成 `false`。
 - 热路径里只保留极小的系统 skill。
 - MCP 尽量使用已安装的直接命令，减少 `npx`/`uvx` 之类 wrapper 的额外开销。
 - 用户请求明确需要某能力时，再按需唤醒。

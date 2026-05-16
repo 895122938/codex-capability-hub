@@ -91,7 +91,8 @@ def collect_health() -> dict[str, Any]:
         },
         "features": {
             "plugins": features.get("plugins", "default"),
-            "workspace_dependencies": features.get("workspace_dependencies", "default"),
+            "workspace_dependencies": features.get("workspace_dependencies", "absent"),
+            "has_workspace_dependencies_key": "workspace_dependencies" in features,
         },
         "plugins": {
             "configured_count": len(plugins),
@@ -181,13 +182,13 @@ def evaluate_health(data: dict[str, Any]) -> list[dict[str, str]]:
             }
         )
 
-    if features.get("workspace_dependencies") is True:
+    if features.get("has_workspace_dependencies_key"):
         findings.append(
             {
                 "severity": "warn",
-                "code": "workspace_dependencies_hot",
-                "message": "[features].workspace_dependencies is true.",
-                "fix": "Disable workspace dependencies unless the current task needs them.",
+                "code": "unsupported_workspace_dependencies_key",
+                "message": "[features].workspace_dependencies is present. Some Codex desktop builds treat this as an unsupported feature and can wait for a UI-loading timeout even when it is false.",
+                "fix": "Remove the workspace_dependencies line from the [features] section instead of setting it to false.",
             }
         )
 

@@ -12,6 +12,7 @@ EXAMPLES = ROOT / "examples"
 HEALTH = SCRIPTS / "codex_capability_health.py"
 BENCHMARK = SCRIPTS / "codex_capability_benchmark.py"
 DOCTOR = SCRIPTS / "codex_capability_doctor.py"
+PLUGIN_TOGGLE = SCRIPTS / "codex_plugin_toggle.py"
 
 
 def base_env(tmp_path: Path, *, examples: bool = True) -> dict[str, str]:
@@ -119,3 +120,34 @@ def test_doctor_json_includes_recommendations(tmp_path: Path) -> None:
     data = json.loads(result.stdout)
     assert data["recommendations"]
     assert all("commands" in item for item in data["recommendations"])
+
+
+def test_health_warns_when_unsupported_workspace_dependencies_key_exists(tmp_path: Path) -> None:
+    env = base_env(tmp_path, examples=True)
+    config = Path(env["CODEX_CONFIG"])
+    config.parent.mkdir(parents=True)
+    config.write_text("[features]\nplugins = false\nworkspace_dependencies = false\n", encoding="utf-8")
+
+    result = run_script(HEALTH, ["--json"], env)
+
+    assert result.returncode == 0, result.stderr + result.stdout
+    data = json.loads(result.stdout)
+    assert data["status"] == "warn"
+    assert any(item["code"] == "unsupported_workspace_dependencies_key" for item in data["findings"])
+
+
+def test_plugin_lean_startup_removes_unsupported_workspace_dependencies_key(tmp_path: Path) -> None:
+    env = base_env(tmp_path, examples=True)
+    config = Path(env["CODEX_CONFIG"])
+    config.parent.mkdir(parents=True)
+    config.write_text(
+        "[features]\nplugins = true\nworkspace_dependencies = false\n\n[plugins.\"browser-use@openai-bundled\"]\nenabled = true\n",
+        encoding="utf-8",
+    )
+
+    result = run_script(PLUGIN_TOGGLE, ["--lean-startup"], env)
+
+    assert result.returncode == 0, result.stderr + result.stdout
+    text = config.read_text(encoding="utf-8")
+    assert "plugins = false" in text
+    assert "workspace_dependencies" not in text
