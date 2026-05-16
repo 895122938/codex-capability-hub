@@ -201,11 +201,21 @@ codex-plugin-toggle.ps1 --lean-startup
 codex-lean-hotpath.ps1 apply
 ```
 
-生成能力清单：
+生成能力清单与诊断：
 
 ```powershell
 codex-capability-inventory.ps1 --json
+codex-capability-health.ps1
+codex-capability-health.ps1 --json
+codex-capability-benchmark.ps1
+codex-capability-doctor.ps1
 ```
+
+诊断层默认只读，不会自动改配置：
+
+- `health` 检查热路径风险：热 skills 数量、plugin feature 状态、显式启用的可选插件、MCP 数量、registry 是否可用。
+- `benchmark` 度量框架层面的代理指标：配置解析、registry 加载、热 skill 扫描、路由匹配等耗时。
+- `doctor` 把 health 发现转换成安全、可复制执行的 PowerShell 修复建议。
 
 ## 渐进式 workflows
 

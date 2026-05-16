@@ -15,13 +15,19 @@ $Files = @(
   "codex_skills_hotcold.py",
   "codex_lean_hotpath.py",
   "codex_capability_inventory.py",
+  "codex_capability_health.py",
+  "codex_capability_benchmark.py",
+  "codex_capability_doctor.py",
   "codex-auto-wake.ps1",
   "codex-wake.ps1",
   "codex-plugin-toggle.ps1",
   "codex-mcp-toggle.ps1",
   "codex-skills-hotcold.ps1",
   "codex-lean-hotpath.ps1",
-  "codex-capability-inventory.ps1"
+  "codex-capability-inventory.ps1",
+  "codex-capability-health.ps1",
+  "codex-capability-benchmark.ps1",
+  "codex-capability-doctor.ps1"
 )
 if ($RemoveRegistries) {
   $Files += @("capabilities.json", "capability_workflows.json", "capability_links.json", "capability_interfaces.json", "plugin_aliases.json")

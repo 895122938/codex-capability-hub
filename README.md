@@ -202,11 +202,21 @@ codex-plugin-toggle.ps1 --lean-startup
 codex-lean-hotpath.ps1 apply
 ```
 
-Inventory:
+Inventory and diagnostics:
 
 ```powershell
 codex-capability-inventory.ps1 --json
+codex-capability-health.ps1
+codex-capability-health.ps1 --json
+codex-capability-benchmark.ps1
+codex-capability-doctor.ps1
 ```
+
+The diagnostics layer is intentionally read-only by default:
+
+- `health` checks hot-path risk: hot skills, plugin feature state, optional plugins, MCP count, and registry availability.
+- `benchmark` measures framework-level proxy timings such as config parse, registry load, hot skill scanning, and router matching.
+- `doctor` converts health findings into safe, copy-pastable PowerShell recommendations.
 
 ## Progressive workflows
 

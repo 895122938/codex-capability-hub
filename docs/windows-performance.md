@@ -41,6 +41,23 @@ $env:USERPROFILE\.codex\repair-tools\codex-plugin-toggle.ps1 --lean-startup
 $env:USERPROFILE\.codex\repair-tools\codex-lean-hotpath.ps1 apply
 ```
 
+## Measure before and after
+
+Use the diagnostics tools to avoid guessing which layer is hot:
+
+```powershell
+$env:USERPROFILE\.codex\repair-tools\codex-capability-health.ps1
+$env:USERPROFILE\.codex\repair-tools\codex-capability-benchmark.ps1
+$env:USERPROFILE\.codex\repair-tools\codex-capability-doctor.ps1
+```
+
+Suggested workflow:
+
+1. Run `codex-capability-health.ps1` to identify hot-path risks.
+2. Run `codex-capability-benchmark.ps1` before and after changes to compare trends.
+3. Run `codex-capability-doctor.ps1` for safe repair commands.
+4. Restart or reload Codex if you changed skills, MCP servers, or plugins.
+
 ## Repair bundled plugin cache
 
 If OpenAI bundled plugin cache is locked or corrupt, try:

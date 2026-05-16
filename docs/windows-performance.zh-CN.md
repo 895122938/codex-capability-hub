@@ -41,6 +41,23 @@ $env:USERPROFILE\.codex\repair-tools\codex-plugin-toggle.ps1 --lean-startup
 $env:USERPROFILE\.codex\repair-tools\codex-lean-hotpath.ps1 apply
 ```
 
+## 优化前后做度量
+
+建议用诊断工具先定位是哪一层变热，而不是靠猜：
+
+```powershell
+$env:USERPROFILE\.codex\repair-tools\codex-capability-health.ps1
+$env:USERPROFILE\.codex\repair-tools\codex-capability-benchmark.ps1
+$env:USERPROFILE\.codex\repair-tools\codex-capability-doctor.ps1
+```
+
+推荐流程：
+
+1. 先运行 `codex-capability-health.ps1`，看热路径风险。
+2. 优化前后运行 `codex-capability-benchmark.ps1`，对比趋势。
+3. 运行 `codex-capability-doctor.ps1`，获取安全的修复命令。
+4. 如果改动了 skills、MCP 或 plugins，重启或 reload Codex 后再验证。
+
 ## 修复 bundled plugin cache
 
 如果 OpenAI bundled plugin cache 被锁定或损坏，可以尝试：
